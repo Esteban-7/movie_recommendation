@@ -50,4 +50,3 @@ def get_recommendations(movie_id,depth):
     
     return movies_id
 
-print(get_recommendations("tt0133093",2))
