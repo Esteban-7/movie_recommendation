@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import re # regex expression
 import tqdm.notebook as tq # time loop in notebook
 import re
+from movie_distance import estimateMovieDistance
 
 
 def get_title(movie_id):
@@ -14,7 +15,7 @@ def get_title(movie_id):
         result = response.content    
         soup = BeautifulSoup(result, 'html.parser')
     
-        title = soup.find('h1', class_ = 'sc-b73cd867-0 eKrKux').getText()
+        title = soup.find('h1', attrs = {"data-testid" : "hero-title-block__title"}).getText()
     
         return title
     except:
@@ -51,7 +52,7 @@ def get_runtime(movie_id):
         children = table.contents
         runtime = children[1].contents[3].getText().split("(")[1]
         runtime = runtime.split(" ")[0]
-        
+        runtime = int(runtime)
         return runtime
     
     except:
@@ -211,7 +212,7 @@ def get_genre(movie_id):
         return genres
     except:
         print("Genre is not available")
-        return 0
+        return [0]
 
 def get_top_cast(movie_id):
     url = "https://www.imdb.com/title/"+movie_id
@@ -234,7 +235,7 @@ def get_top_cast(movie_id):
         return top_casts
     except:
         print("Top cast is not available")
-        return 0
+        return [0]
 
 def get_director(movie_id):
     url = "https://www.imdb.com/title/"+movie_id
@@ -257,7 +258,7 @@ def get_director(movie_id):
         return directors
     except:
         print("Director is not available")
-        return 0
+        return [0]
 
 def get_rating(movie_id):
     url = "https://www.imdb.com/title/"+movie_id
@@ -270,9 +271,10 @@ def get_rating(movie_id):
         result = response.content    
         soup = BeautifulSoup(result, 'html.parser')
 
-        rate = soup.find('div',  attrs = {"data-testid":'hero-rating-bar__aggregate-rating__score'}).find('span', class_ = 'sc-7ab21ed2-1 jGRxWM').getText()
-            
-        return rate
+        rating = soup.find('div',  attrs = {"data-testid":'hero-rating-bar__aggregate-rating__score'}).find('span', class_ = 'sc-7ab21ed2-1 jGRxWM').getText()
+        rating = float(rating)    
+
+        return rating
     except:
         print("Rating is not available")
         return 0
@@ -300,3 +302,19 @@ def get_movie_info(movie_id):
 
 
 
+
+
+def info_recommendations(movie1,type_recommendation):
+    #takes as argument a movie and the type of recommendation (imdb or our own) to get the information of all recommended movies. 
+    if type_recommendation == "imdb":
+        array = movie1["imdb_recommendations"]
+    else:
+        array = movie1["new_recommendations"]
+
+    movies = []
+    for movie_id in array:
+        movie = get_movie_info(movie_id)
+        movie["euclidean_distance"] = estimateMovieDistance(movie1,movie)[0]
+        movie["manhattan_distance"] = estimateMovieDistance(movie1,movie)[1]
+        movies.append(movie)
+    return movies

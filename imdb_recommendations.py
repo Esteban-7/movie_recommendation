@@ -23,7 +23,7 @@ def Get_hrefs(url):
                     hrefs.append(movie_id) #save the links (ids) in a list.
     return(hrefs)
 
-def get_recommendations(movie_id,depth):
+def get_imdb_recommendations(movie_id,depth):
     #Searches in the IMDB "more like this" for recommendations based on the link of one movie. 
     #Input: IMDB link to a movie/show. Depth: amount of iterations to search in the "more like this"
     #Output: a list of links for imdb movies/shows. 
