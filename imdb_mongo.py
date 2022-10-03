@@ -13,11 +13,10 @@ def upload_recommended_infos(movie):
     db = client["movie_recommendations"]
     collection = db["movie_recommendation"]
     film = {"movie_id":movie["imdb_id"], 
-            "imdb_recommended": info_recommendations(movie,"imdb")
+            "movie_name":movie["name"],
+            "imdb_recommended": info_recommendations(movie,"imdb"),
+            "new_recommended": info_recommendations(movie,"new")
             } 
-    
-
-
     collection.insert_one(film)
 
 
@@ -28,7 +27,8 @@ def get_imdb_rec_mongo(movie):
     collection = db["imdb_rec_temp"]
     doc = collection.find({"movie_id": movie["imdb_id"]})
     data = doc[0]
-    data = data["info_recommended"]
-    return data
+    imdb = data["imdb_recommended"]
+    new_recommended = data["new_recommended"]
+    return imdb,new_recommended
 
     

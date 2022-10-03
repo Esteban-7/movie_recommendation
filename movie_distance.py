@@ -29,5 +29,9 @@ def estimateMovieDistance(movie1,movie2):
     manhattan = distance.cityblock(movie1_vector,movie2_vector)
     manhattan = manhattan.item()
     
-    return euclidean,manhattan
+    return {"euclidean": euclidean,
+            "manhattan":manhattan,
+            "common_genres_rate": common_genres_rate,
+            "common_directors_rate": common_directors_rate,
+            "common_cast_rate": common_cast_rate}
 
