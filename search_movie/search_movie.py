@@ -22,14 +22,20 @@ def search_movies(path):
     driver.find_element("id", 'suggestion-search-button').click()
     
     #find the tables that hold the results of the search. 
-    table=driver.find_element("xpath",'//*[@id="main"]/div/div[2]/table')
-    
-    
-    results_search = table.find_elements("class name", "result_text")
-    results = []
-    for result in results_search:
-        results += result.find_elements("tag name","a") #get the elements results of the search
-    
+    try:
+        table=driver.find_element("xpath",'//*[@id="main"]/div/div[2]/table')
+        results_search = table.find_elements("class name", "result_text")
+        results = []
+        for result in results_search:
+            results += result.find_elements("tag name","a") #get the elements results of the search
+
+    except:
+        table=driver.find_element("xpath",'//*[@id="__next"]/main/div[2]/div[2]/section/div/div[1]/section[2]/div[2]/ul')
+        results_search = table.find_elements("class name","ipc-metadata-list-summary-item__tc")
+        results = []
+        for result in results_search:
+            results.append(result.find_element("tag name", "a"))
+        
     options = {}
     for i in range(len(results)):
         row = results[i]

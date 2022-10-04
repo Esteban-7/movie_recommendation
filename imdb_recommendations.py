@@ -1,7 +1,7 @@
 import requests 
 from bs4 import BeautifulSoup
 import re # regex expression
-import tqdm.notebook as tq
+
 
 
 def Get_hrefs(url):
@@ -23,7 +23,7 @@ def Get_hrefs(url):
                     hrefs.append(movie_id) #save the links (ids) in a list.
     return(hrefs)
 
-def get_recommendations(movie_id,depth):
+def get_imdb_recommendations(movie_id,depth):
     #Searches in the IMDB "more like this" for recommendations based on the link of one movie. 
     #Input: IMDB link to a movie/show. Depth: amount of iterations to search in the "more like this"
     #Output: a list of links for imdb movies/shows. 
@@ -31,14 +31,14 @@ def get_recommendations(movie_id,depth):
     
     urls_checked = []
 
-    for i in tq.tqdm(range(depth)):
+    for i in range(depth):
         if i == 0:
             
             hrefs  = Get_hrefs(url)
             urls_checked.append(url) 
         else:
             hrefs_temp = []
-            for href in tq.tqdm(hrefs):
+            for href in hrefs:
                 new_url = "https://www.imdb.com" + href
                 if new_url not in urls_checked:
                     hrefs_temp += Get_hrefs(new_url)
@@ -50,4 +50,3 @@ def get_recommendations(movie_id,depth):
     
     return movies_id
 
-print(get_recommendations("tt0133093",2))
