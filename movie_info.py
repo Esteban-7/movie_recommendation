@@ -398,9 +398,9 @@ def get_movie_info(movie_id):
     movie["imdb_reviews"] = get_num_reviews(movie_id)
     movie["external_reviews"] =  get_num_exernal_reviews(movie_id)
     #movie["imdb_rating"] = get_rating(movie_id)
-    movie["metacritic_punctuation"] = get_metascore(movie_id)
+    movie["metacritic_rating"] = get_metascore(movie_id)
 
-    order = ["name","imdb_id","year_released","runtime","imdb_reviews","external_reviews","imdb_rating","metacritic_punctuation","budget","earning_worldwide",
+    order = ["name","imdb_id","year_released","runtime","imdb_reviews","external_reviews","imdb_rating","metacritic_rating","budget","earning_worldwide",
             "earning_US&CA","genres","directors","cast"]
     
     movie = {k: movie[k] for k in order}
@@ -411,7 +411,7 @@ def get_movie_info(movie_id):
     #       "imdb_reviews": get_num_reviews(movie_id),
     #      "external_reviews": get_num_exernal_reviews(movie_id),
     #      "imdb_rating": get_rating(movie_id),
-    #      "metacritic_punctuation": get_metascore(movie_id),
+    #      "metacritic_rating": get_metascore(movie_id),
     #       "budget": get_budget(movie_id),
     #       "earning_worldwide": get_gross_Worldwide(movie_id),
     #       "earning_US&CA": get_gross_Canada_US(movie_id),
