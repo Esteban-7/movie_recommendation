@@ -3,12 +3,14 @@ from movie_info import info_recommendations
 
 
 def save_movie(movie):
+    #saves a given movie object (dictionary) in the "movie" collection in the mongoDB database
     client = pymongo.MongoClient("localhost",27017)
     db = client["movie_recommendations"]
     collection = db["movie"]
     collection.insert_one(movie)
 
 def upload_recommended_infos(movie):
+    #Uploads the information of the recommended movies for a given movie into the mongodb database.
     client = pymongo.MongoClient("localhost",27017)
     db = client["movie_recommendations"]
     collection = db["movie_recommendation"]

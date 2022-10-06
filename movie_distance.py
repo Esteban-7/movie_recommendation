@@ -11,6 +11,9 @@ def compare_lists(list1,list2):
 
 
 def estimateMovieDistance(movie1,movie2):
+    #given two movie objects (dictionaries), the distance between the movies is estimated.
+    #the lists of cast, directors and genres are transformed comparing the elements of both movies and estimating the common elements rate.
+    #given all data is numeric, euclidean and manhattan distances are calculated. 
     movie1_vector = [movie1["year_released"],movie1["runtime"],movie1["imdb_reviews"],movie1["external_reviews"],movie1["imdb_rating"],movie1["metacritic_rating"],movie1["budget"],
                     movie1["earning_worldwide"],movie1["earning_US&CA"],1,1,1]
     movie2_vector = [movie2["year_released"],movie2["runtime"],movie2["imdb_reviews"],movie2["external_reviews"],movie2["imdb_rating"],movie2["metacritic_rating"],movie2["budget"],

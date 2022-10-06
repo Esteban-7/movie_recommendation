@@ -7,7 +7,12 @@ from movie_distance import estimateMovieDistance
 from multiprocessing.dummy import Pool
 
 
+#this script contains different functions to scrap the information of a given movie but it-s id in IMDb. 
+#The basic scraping includes the request to the imdb webpage of a given movie and then getting the information from it using Beautiful Soup.
+
 def get_basic_info(movie_id):
+    #using the home page of a movie it gathers the most basic information such as:
+    #   name, budget, earnings, genres, cast, directors and imdb rating. 
     url = "https://www.imdb.com/title/"+movie_id
     try:
         response = requests.get(url)
@@ -118,164 +123,9 @@ def get_basic_info(movie_id):
         print("Title is not available")
         return 0
 
-# def get_budget(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-#     try:
-
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-
-#         budget = soup.find('li', attrs = {"data-testid":'title-boxoffice-budget'}).find('span', class_ 
-#                                                                         ='ipc-metadata-list-item__list-content-item').getText()
-    
-#         import re
-#         budget = re.sub("[^0-9]", "", budget)
-#         return int(budget)
-
-#     except:
-#         print("Budget is not available")
-#         return 0
-
-# def get_gross_Worldwide(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-    
-#     try:
-
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-
-#         gross_Worldwide = soup.find('li', attrs = {"data-testid":'title-boxoffice-cumulativeworldwidegross'}).find('span', class_ = 'ipc-metadata-list-item__list-content-item').getText()
-
-#         import re
-#         gross_Worldwide = re.sub("[^0-9]", "",gross_Worldwide)
-#         return int(gross_Worldwide)
-#     except:
-#         print("Gross Worldwide is not available")
-#         return 0
-
-# def get_gross_Canada_US(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-    
-#     try:
-        
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-
-#         gross_US_et_Canada = soup.find('li', attrs = {"data-testid":'title-boxoffice-grossdomestic'}).find('span', class_ = 'ipc-metadata-list-item__list-content-item').getText()
-    
-#         import re
-#         gross_US_et_Canada = re.sub("[^0-9]", "", gross_US_et_Canada)
-#         return int(gross_US_et_Canada)
-
-#     except:
-#         print("Gross Canada et US is not available")
-#         return 0
-
-# def get_genre(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-#     try:
-
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-    
-#         genre = soup.find('div', class_ = 'ipc-chip-list__scroller').find_all('a', class_ = 'sc-16ede01-3 bYNgQ ipc-chip ipc-chip--on-baseAlt')
-
-#         genres = []
-
-#         for i in genre:
-#             x = i.getText()
-#             genres.append(x)
-    
-#         return genres
-#     except:
-#         print("Genre is not available")
-#         return [0]
-
-# def get_top_cast(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-#     try:
-
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-    
-#         top_cast = soup.find('div', class_ = 'ipc-sub-grid ipc-sub-grid--page-span-2 ipc-sub-grid--wraps-at-above-l ipc-shoveler__grid').find_all('a',class_ = 'sc-36c36dd0-1 QSQgP')
-
-#         top_casts = []
-
-#         for i in top_cast:
-#             b = i.getText()
-#             top_casts.append(b)
-
-#         return top_casts
-#     except:
-#         print("Top cast is not available")
-#         return [0]
-
-# def get_director(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-#     try:
-
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-    
-#         director = soup.find('li', class_ = 'ipc-metadata-list__item').find_all('a', class_ = 'ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link')
-
-#         directors = []
-
-#         for i in director:
-#             y = i.getText()
-#             directors.append(y)
-
-#         return directors
-#     except:
-#         print("Director is not available")
-#         return [0]
-
-# def get_rating(movie_id):
-#     url = "https://www.imdb.com/title/"+movie_id
-    
-#     # print(url)
-    
-#     try:
-
-#         response = requests.get(url)
-#         result = response.content    
-#         soup = BeautifulSoup(result, 'html.parser')
-
-#         rating = soup.find('div',  attrs = {"data-testid":'hero-rating-bar__aggregate-rating__score'}).find('span', class_ = 'sc-7ab21ed2-1 jGRxWM').getText()
-#         rating = float(rating)    
-
-#         return rating
-#     except:
-#         print("Rating is not available")
-#         return 0
-
-
-
-
-
-
-
 
 def get_year(movie_id):
+    #gets the information of year of realease for a given movie
     url = "https://www.imdb.com/title/"+movie_id+ "/releaseinfo?ref_=tt_ov_rdat"
     
     # print(url)
@@ -292,6 +142,7 @@ def get_year(movie_id):
         return 0
 
 def get_runtime(movie_id):
+    #gets the information of the runtime in minutes for a given  movie
     url = "https://www.imdb.com/title/"+movie_id+ "/technical?ref_=tt_spec_sm"
     
     # print(url)
@@ -313,6 +164,7 @@ def get_runtime(movie_id):
         return 0
 
 def get_votes(movie_id):
+    #gets the information of the number of votes in the imdb platform for a given movie
     url = "https://www.imdb.com/title/"+movie_id+ "/ratings/"
     
     # print(url)
@@ -330,6 +182,7 @@ def get_votes(movie_id):
         return 0
     
 def get_metascore(movie_id):
+    #gets the metascore rating according to the imdb website of a given movie
     url = "https://www.imdb.com/title/"+movie_id+ "/criticreviews/"
     
     # print(url)
@@ -348,6 +201,7 @@ def get_metascore(movie_id):
         return 0
 
 def get_num_reviews(movie_id):
+    #gets the number of reviews by users in the imdb platform for a given movie.
     url = "https://www.imdb.com/title/"+movie_id+ "/reviews/"
     
     # print(url)
@@ -366,6 +220,7 @@ def get_num_reviews(movie_id):
         return 0
 
 def get_num_exernal_reviews(movie_id):
+    #gets the number of critics reviews on external websites to imdb but gathered by imdb for a given movie. 
     url = "https://www.imdb.com/title/"+movie_id+ "/externalreviews/"
     
     # print(url)
@@ -384,13 +239,8 @@ def get_num_exernal_reviews(movie_id):
 
 
 
-
-
-
-
-
-
 def get_movie_info(movie_id):
+    #uses all defined functions before in order to create a dictionary object called movie, in which the information for a given movie id is held
     movie = get_basic_info(movie_id)
     movie["imdb_id"] = movie_id
     movie["year_released"] = get_year(movie_id)
@@ -404,21 +254,6 @@ def get_movie_info(movie_id):
             "earning_US&CA","genres","directors","cast"]
     
     movie = {k: movie[k] for k in order}
-    # movie = {"name": get_title(movie_id),
-    #       "imdb_id": movie_id,
-    #      "year_released": get_year(movie_id),
-    #      "runtime": get_runtime(movie_id),
-    #       "imdb_reviews": get_num_reviews(movie_id),
-    #      "external_reviews": get_num_exernal_reviews(movie_id),
-    #      "imdb_rating": get_rating(movie_id),
-    #      "metacritic_rating": get_metascore(movie_id),
-    #       "budget": get_budget(movie_id),
-    #       "earning_worldwide": get_gross_Worldwide(movie_id),
-    #       "earning_US&CA": get_gross_Canada_US(movie_id),
-    #       "genres": get_genre(movie_id),
-    #       "directors":get_director(movie_id),
-    #       "cast":get_top_cast(movie_id) #
-    #      } 
     return movie
 
 

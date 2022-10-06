@@ -1,4 +1,3 @@
-from turtle import color, title
 import streamlit as st
 import plotly.figure_factory as ff
 import numpy as np
@@ -8,11 +7,15 @@ import plotly.express as px
 import plotly.io as pio
 import pymongo
 import json
-#from imdb_main import recommend
+
 
 
 def stream_imdb():
-
+    #This script intends to create and show a dashboard in which the recommended movies will be displayed. 
+    #The script reads the imdb_id_movie json file created in which the id of the movie in study is saved. Then reads the recommendation collection in the mongoDB database.
+    #from the information gathered with mongo, the dataframes using the imdb recommendations and our recommendations are created. From them, different plots are designed with plotly
+    #the plots are later displayed with streamlit
+    
     client = pymongo.MongoClient("localhost",27017)
     db = client["movie_recommendations"]
     collection = db["movie_recommendation"]
