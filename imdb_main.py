@@ -23,8 +23,8 @@ def new_movie():
     #Calls on the scrap_imdb and passes the genres of the movie as the argument. Creating a long list of movies with the same set of genres.
     movie_id = search_movies(path)[1]
     movie = get_movie_info(movie_id)
-    
-    imdb_recommendations = get_imdb_recommendations(movie_id,2)
+    depth = int(input("Depth in IMDb recommendations:"))
+    imdb_recommendations = get_imdb_recommendations(movie_id,depth)
     movie["imdb_recommendations"]=imdb_recommendations
     print(movie)
 

@@ -24,19 +24,20 @@ class imdbSpider(scrapy.Spider):
     def parse(self, response):
         #in the parse function the starting irl is scraped, the name and ids for the first 500 the movies recommended by the imdb by the genres selected are taken
         # a temporal file is created with the information of all 500 movies recommmended. so that it later can be saved by the imdb_mongo module
+        max_movies = int(input("Max number of movies Scrapped for new recommendations: "))
         for movie in response.css("div.lister-item-content"):
             movie = movie.css("a").attrib["href"]
             movie = movie.split("title/")[1]
             movie = re.sub("/","",movie)
             self.movies.append(movie)
             
-            if len(self.movies) > 500:
+            if len(self.movies) > max_movies:
                 break
             
  
         next_page = response.css("a.lister-page-next.next-page").attrib["href"]
 
-        if (next_page is not None) and (len(self.movies)<500):
+        if (next_page is not None) and (len(self.movies)<max_movies):
                 yield response.follow(next_page, callback = self.parse)
         
         with open('imdb_scraper/imdb_scraper/spiders/recommended.json', 'w', encoding='utf-8') as f:
