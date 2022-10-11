@@ -34,6 +34,20 @@ The general idea of our project was to create our own  movie recommendation syst
 For this, we divided our work into several modules, each connected to the rest that we will explain below. 
 ***First of all, we interact with the "More like this" function on the IMDb platform to generate a list of recommendations based on a film. We  use selenium, beautiful soup and scrapy to collect all the information we needed from the site. The data  we scrap  from each film is then saved in a Mongodb database. Then, we propose our recommendation system by finding a list of movies based on the genre of a given movie, then estimating distance between movies and choosing the closest . Finally, to show the results, we created dashboards to do some data analysis comparing IMDB recommendation system and our own.
 
+### Requirements:
+
+The installation of the following packages is required:
+- Beautiful Soup
+- Scrapy
+- Selenium
+- Plotly
+- Streamlit
+- Scypy
+- Pandas
+- json
+
+In addition, it is necessary to download the proper driver for Chrome browser according to the user OS.
+
 
 ### Modules
 
