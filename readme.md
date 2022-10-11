@@ -20,8 +20,8 @@ The general idea of our project was to create our own  movie recommendation syst
     <li><a href="#Get-movie-recommendation">Get movie recommendation </a></li>
     <li><a href="#IMDB-scraper ">IMDB scrapper</a></li>
     <li><a href="#Storing-data-into-MongoDB">Storing data into MongoDB</a></li>
-    <li><a href="#Creating-a-movie-recommendation">Creating a movie recommendation system </a></li>
     <li><a href="#Data-analysis-and-Dashboard">Data analysis and Dashboard </a></li>
+    <li><a href="#Creating-a-movie-recommendation">Creating a movie recommendation system </a></li>
     <li><a href="#all_together">All together </a></li>
   </ol>
 </details>
@@ -31,13 +31,13 @@ The general idea of our project was to create our own  movie recommendation syst
 
 ## Getting Started
 
-For this, we divided our work in several parts, each  connected to the rest that we will see below. 
-***First of all, we decided to use the recommendation from IMDB diagram. We  used all three selenium, beautiful soup and scrapy to collect all the information we needed from the site. The data  we scraped  from each film is then saved in a Mongodb database. Then, we start building our recommendation system by estimating distance between movies. Finally, to show our work, we created dashboards to do some data analysis comparing IMDB recommendation system and our own.
+For this, we divided our work into several modules, each connected to the rest that we will explain below. 
+***First of all, we interact with the "More like this" function on the IMDb platform to generate a list of recommendations based on a film. We  use selenium, beautiful soup and scrapy to collect all the information we needed from the site. The data  we scrap  from each film is then saved in a Mongodb database. Then, we propose our recommendation system by finding a list of movies based on the genre of a given movie, then estimating distance between movies and choosing the closest . Finally, to show the results, we created dashboards to do some data analysis comparing IMDB recommendation system and our own.
 
 
-### Steps
+### Modules
 
-A step by step guide that shows you how to get the development environment up and running.
+A guide that shows how the development environment is set up and run.
 
 ```
 
@@ -60,7 +60,7 @@ $ run.py
 We create a function that asks the user for the input of the name of the movie and it searches the name in imdb search service.
 Selenium webdriver is used to access to the imdb search service.
 The function takes as argument the path to search for the executable webdriver. The path is given from the main module where this function is called.
-We use it to find the tables that hold the search results and create a dictionary.
+We use it to find the tables that hold the search results and create a dictionary of the different movies as result of the search.
 As a result, the function returns the direct link of the movie the user wanted to search and the movie id in the imdb database.
 
 
@@ -68,11 +68,11 @@ As a result, the function returns the direct link of the movie the user wanted t
 ## Get movie information 
 * Using Beautiful Soup
 
-In this part we create several functions to scrap the information of a given movie but it's id in imdb.
+In this module we create several functions to scrap the information of a given movie by it's id in imdb.
 The scraping here includes the request to the imdb webpage of a given movie and then getting the information from it using Beautiful Soup.
 We gather the most basic information such as: name, budget, earnings, genres, cast, directors and imdb rating using only the home page of the movie. Next,using the movie id, we collect info such as year release of the movie, runtime in minutes for a given  movie, number of votes in the imdb platform for a given movie, the metascore rating of a given movie, the number of reviews by users in the imdb platform for a given movie,the number of critics reviews on external websites to imdb but gathered by imdb for a given movie.
 After collecting all the data we needed, we use all defined functions before in order to create a dictionary object called movie, in which the information for a given movie id is held.
-(#takes as argument a movie and the type of recommendation (imdb or our own) to get the information of all recommended movies. )
+(#takes as argument a movie)
  
 
 ## Get movie recommendations
@@ -80,7 +80,7 @@ After collecting all the data we needed, we use all defined functions before in 
 
 To get the recommendations from imbd site we continue using beautiful soup.
 We created a function that requests the url and gets the hrefs for the movies recommended in the "more like this" section in imdb page for a movie. This function returns a list of hrefs elements that link to the movies recommended by imdb.
-Then we create another function containing the id of the movie and the depth of diagram which searches in the IMDB "more like this" for recommendations based on the link of one movie. We have to give as :
+Then we create another function containing the id of the movie and the depth of the research for recommendations which searches in the IMDB "more like this" for recommendations based on the link of one movie. We have to give as :
 
 * Input: IMDB link to a movie/show. 
 * Depth: amount of iterations to search in the "more like this"
@@ -92,27 +92,26 @@ Then we create another function containing the id of the movie and the depth of 
 ## IMDB scraper
  * Using Scrapy
  
-We use scrapy to collect the id of the movie and to get from one page to the next one....
+Given the list of genres for a movie, a search on IMDb platform can be held to see all movies containing such genres, from there, the list can be arranged by the number of votes. We use this list to gather information about related movies for our own recommendation system. Since there can be thousands of movies with the same genres, the Scrapy package is used to browse on the results page and gather all the id's of the related movies. This part of the module gets as an argument the max number of movies that the user wants to include for the recommendation. With the list of Id's, the beautiful soup module is used again to gather all details of each movie in the list. 
 
-
-
-## Storing data into MongoDB
-* Using info_recommendations from movie_info
-
-
-Create a function into movie_info that takes as argument a movie and the type of recommendation (imdb or our own) to get the information of all recommended movies.
-We create another function to save a given movie object in the "movie" collection in MongoDB database. Moreover, we need to upload  the information of the recommended movies into mongodb.
-Finally, we get a movie (dictionary of info),  which returns the list of dictionaries for all the movies recommended by imdb that were saved in the mongodb.
 
 ## Creating a movie recommendation system
 * Using distance
 
 
 To create our own recomendation system we need to use distance package.
-We create a function which takes two lists and estimates how similar the second list is to the first one. The result might be between 0 and 1.
+First we create a function which takes two lists and estimates how similar the second list is to the first one. The result might be between 0 and 1. This is made to compare the list of genres, actors and directors for two different movies. The lists of cast, directors and genres are transformed comparing the elements of both movies and estimating the common elements rate.
 Then, we estimate the movie distance by given two movie objects (dictionaries).
-Furthermore, the lists of cast, directors and genres are transformed comparing the elements of both movies and estimating the common elements rate.
-Since all  the data is numeric,  we calculate euclidean and manhattan distances.
+Since all  the data is numeric,  we calculate euclidean and manhattan distances. The recommended movies will be the ones that, out of the movies with the same genre as the original one, have the shortest distance to the latter. 
+
+
+## Storing data into MongoDB
+* Using info_recommendations from movie_info
+
+
+We create another function to save a given movie object in the "movie" collection in MongoDB database. Moreover, we need to upload  the information of the recommended movies into mongodb.
+Finally, we get a movie (dictionary of info),  which returns the list of dictionaries for all the movies recommended by imdb that were saved in the mongodb. For the information to be read later. 
+
 
 ## Data Analysis and Dashboard
 * Using streamlit, plotly, json , pandas 
