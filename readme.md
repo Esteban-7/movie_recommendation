@@ -32,7 +32,7 @@ The general idea of our project was to create our own  movie recommendation syst
 ## Getting Started
 
 For this, we divided our work into several modules, each connected to the rest that we will explain below. 
-***First of all, we interact with the "More like this" function on the IMDb platform to generate a list of recommendations based on a film. We  use selenium, beautiful soup and scrapy to collect all the information we needed from the site. The data  we scrap  from each film is then saved in a Mongodb database. Then, we propose our recommendation system by finding a list of movies based on the genre of a given movie, then estimating distance between movies and choosing the closest . Finally, to show the results, we created dashboards to do some data analysis comparing IMDB recommendation system and our own.
+First of all, we interact with the "More like this" function on the IMDb platform to generate a list of recommendations based on a film. We  use selenium, beautiful soup and scrapy to collect all the information we needed from the site. The data  we scrap  from each film is then saved in a Mongodb database. Then, we propose our recommendation system by finding a list of movies based on the genre of a given movie, then estimating distance between movies and choosing the closest . Finally, to show the results, we created dashboards to do some data analysis comparing IMDB recommendation system and our own.
 
 ### Requirements:
 
@@ -100,7 +100,6 @@ Then we create another function containing the id of the movie and the depth of 
 * Depth: amount of iterations to search in the "more like this"
 * Output: a list of links for imdb movies/shows. 
 
-***Now that we have the movies id recommended by imdb we go back into movie_info where we create a function which takes as argument a movie and the type of recommendation (imdb or our own) to get the information of all recommended movies. 
 
 
 ## IMDB scraper
