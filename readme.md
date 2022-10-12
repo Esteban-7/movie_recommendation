@@ -150,4 +150,11 @@ Finally to make everything run, we call the imdb_main module on our terminal and
 
 
 
+## Difficulties on development
+
+1. Changing of IMDb UI for results page: after Selenium can manage to search for a movie using the search bar, two different UI's can appear showing the results, this is caused by an update on the app that they might be testing at the moment. Given that the user cannot control which version of the app is going to get, a try/except piece of code had to be implemented to handle both versions. 
+2. After gather all the id's from movies with the same genres as the initial movie, it gets time consuming to scrap all details needed from each movie in order to get the distance to the original movie. For this reason, this part of the script is handled with parallelization, so the process is more time efficient.
+3. For the scrapy module to work, it is necessary to call the python interpreter, however, to make it part of all the code, a solution was to call the crawler process inside a function, so that the spider can be called from within a python script. 
+4. To correctly use the streamlit module it is necessary to call on the terminal the "streamlit run" command. However, for the imdb_main module, it is necessary to call the python interpreter so that the scrapy module doesn't show any error. For this, the "run" module is designed, so that both the python and the streamlit commands can be called from the terminal by using the "os" package. 
+5. For the dashboard module, in the plotly plots an error showed in which the distribution of the euclidean or manhattan distance cannot be estimated given that some observations have non finite value. This can be avoided by not including in the analysis movies that are not out yet (pre production) and movies that are not the intial movie for the recommendations. 
 
