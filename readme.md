@@ -47,6 +47,7 @@ The installation of the following packages is required:
 - json
 
 In addition, it is necessary to download the proper driver for Chrome browser according to the user OS.
+The installation of mongoDB is also required for the program to run, the configuration for the collections used must be updated in the imdb_mongo module. 
 
 
 ### Modules
