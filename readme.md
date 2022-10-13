@@ -23,6 +23,7 @@ The general idea of our project was to create our own  movie recommendation syst
     <li><a href="#Data-analysis-and-Dashboard">Data analysis and Dashboard </a></li>
     <li><a href="#Creating-a-movie-recommendation">Creating a movie recommendation system </a></li>
     <li><a href="#all_together">All together </a></li>
+    <li><a href="#difficulties_on_development">Difficulties on development </a></li>
   </ol>
 </details>
 
