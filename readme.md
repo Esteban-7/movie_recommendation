@@ -37,7 +37,7 @@ First of all, we interact with the "More like this" function on the IMDb platfor
 
 ### Requirements:
 
-The installation of the following packages is required:
+The installation of the following packages is required (the detail of the requirements can be found in the requirements.txt file):
 - Beautiful Soup
 - Scrapy
 - Selenium
